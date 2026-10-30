@@ -1,16 +1,7 @@
 <?php
 	date_default_timezone_set('Asia/Kolkata');
 
-	define('DB_SERVER', '127.0.0.1');
-	define('DB_USERNAME', 'root');
-	define('DB_PASSWORD', '');
-	define('DB_NAME', 'tashan_db');
-
-	$conn = @mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-	if($conn == false){
-		// dir('Error: Cannot connect');
-		// echo "Fail";
-	}
+	require_once __DIR__ . '/../conn.php';
 	
 	$numbermappings = array("zero", "one","two","three", "four","five","six","seven","eight","nine");
 	

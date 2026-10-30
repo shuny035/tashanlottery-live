@@ -7,6 +7,12 @@ $db_pass   = getenv('DB_PASSWORD') !== false && getenv('DB_PASSWORD') !== '' ? g
 $db_name   = getenv('DB_NAME') ?: 'tashan_db';
 $db_port   = (int)(getenv('DB_PORT') ?: 4000);
 
+if (!defined('DB_SERVER')) define('DB_SERVER', $db_server);
+if (!defined('DB_USERNAME')) define('DB_USERNAME', $db_user);
+if (!defined('DB_PASSWORD')) define('DB_PASSWORD', $db_pass);
+if (!defined('DB_NAME')) define('DB_NAME', $db_name);
+if (!defined('DB_PORT')) define('DB_PORT', $db_port);
+
 $conn = mysqli_init();
 if ($db_server !== '127.0.0.1' && $db_server !== 'localhost') {
     mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);

@@ -1,21 +1,5 @@
 <?php
-// Database connection info
-$dbDetails = array(
-    'host' => '127.0.0.1',
-    'user' => 'root',
-    'pass' => '',
-    'db'   => 'tashan_db'
-);
-
-// Start session and get the current user
-session_start();
-$agent_user = $_SESSION['nirvahaka_hesaru'];
-
-// Establish database connection
-$conn = mysqli_connect($dbDetails['host'], $dbDetails['user'], $dbDetails['pass'], $dbDetails['db']);
-if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
+require_once __DIR__ . '/../conn.php';
 
 // Get the current user's owncode
 $sql2 = "SELECT owncode FROM shonu_subjects WHERE id = '$agent_user'";

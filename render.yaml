@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: tashanlottery
+    runtime: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: DB_HOST
+        value: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_USER
+        value: 33DAiUvZbJwLN6P.root
+      - key: DB_PASSWORD
+        value: 4YmiwUyUTs3a3Obe
+      - key: DB_NAME
+        value: tashan_db

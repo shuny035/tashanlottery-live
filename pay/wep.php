@@ -1,13 +1,7 @@
 <?php
 error_reporting(0);
 
-define('DB_SERVER', '127.0.0.1');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_NAME', 'tashan_db');
-
-// Try connecting to the Database
-$conn = mysqli_connect(DB_SERVER, indiawin_tashan, indiawin_tashan, indiawin_tashan);
+require_once __DIR__ . '/../conn.php';
 $sql2 = "SELECT upi FROM notice WHERE id='1'";
 $result = $conn->query($sql2);
 $row = mysqli_fetch_array($result);
