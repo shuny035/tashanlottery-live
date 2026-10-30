@@ -1,22 +1,15 @@
 RewriteEngine On
 RewriteBase /
 
-# Prevent Apache mod_dir from issuing redirects with the internal port (e.g. :10000)
-DirectorySlash Off
-
-# Safely handle directory trailing slashes without exposing internal container ports
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
-
-# Allow direct file access if file exists
+# Do not rewrite existing files or directories
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Check if php file exists without .php extension
-RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+# Hide .php extension (optional)
+RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [L]
 
-# Frontend fallback (SPA) - do not intercept API, admin, pay, pg, jili, uploads, or assets
-RewriteCond %{REQUEST_URI} !^/(api|admin|pay|pg|jili|uploads|assets|favicon|logo)/? [NC]
+# Exclude known public folders from SPA fallback
+RewriteCond %{REQUEST_URI} !^/(api|admin|pay|pg|jili|assets|images|images_usdt|vendors|uploads|favicon|logo)/? [NC]
 RewriteRule ^.*$ /index.html [L]

@@ -1,19 +1,11 @@
 RewriteEngine On
 RewriteBase /admin/
 
-DirectoryIndex index.php index.html
-
-# Disable directory listing
-Options -Indexes
-
-# Allow existing files and directories
+# Do not rewrite existing files or directories
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Hide PHP and HTML extensions
+# Hide .php extension (optional)
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [L]
-
-RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^(.*)$ $1.html [L]
