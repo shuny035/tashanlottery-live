@@ -399,20 +399,17 @@ class SSP {
 	 */
 	static function sql_connect ( $sql_details )
 	{
-		$host = getenv('DB_HOST') ?: ($sql_details['host'] ?? 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com');
-		$user = getenv('DB_USER') ?: ($sql_details['user'] ?? '33DAiUvZbJwLN6P.root');
-		$pass = (getenv('DB_PASSWORD') !== false && getenv('DB_PASSWORD') !== '') ? getenv('DB_PASSWORD') : ($sql_details['pass'] ?? '4YmiwUyUTs3a3Obe');
-		$db   = getenv('DB_NAME') ?: ($sql_details['db'] ?? 'tashan_db');
-		$port = (int)(getenv('DB_PORT') ?: ($sql_details['port'] ?? 4000));
+		$host = 'sql302.infinityfree.com';
+		$user = 'if0_43313154';
+		$pass = 'J09oX3jfddQDeQ';
+		$db   = 'if0_43313154_tashan';
+		$port = 3306;
 
 		$options = array( PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION );
-		if ($host !== '127.0.0.1' && $host !== 'localhost') {
-			$options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
-		}
 
 		try {
 			$db = @new PDO(
-				"mysql:host={$host};port={$port};dbname={$db}",
+				"mysql:host={$host};port={$port};dbname={$db};charset=utf8mb4",
 				$user,
 				$pass,
 				$options
