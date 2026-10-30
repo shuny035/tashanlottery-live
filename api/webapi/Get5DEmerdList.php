@@ -58,7 +58,9 @@
 						  FROM ".$oedajnahb."
 						  ORDER BY shonu DESC LIMIT 100";
 						$samasyephalitansa = $conn->query($samasye);
-						while($salu = mysqli_fetch_array($samasyephalitansa)){
+						$samasyephalitansa_sreni = [];
+						if (!$samasyephalitansa) { $samasyephalitansa = false; }
+						while($samasyephalitansa && ($salu = mysqli_fetch_array($samasyephalitansa))){
 							$abele = str_split($salu['bele']);
 							if($typeNumber == 1){
 								$samasyephalitansa_sreni[] = $abele[0];
@@ -76,6 +78,7 @@
 								$samasyephalitansa_sreni[] = $abele[4];
 							}
 						}
+						if (empty($samasyephalitansa_sreni)) { $samasyephalitansa_sreni = array_fill(0, 100, 0); }
 						
 						function createRandomArray($length = 10, $min = 5, $max = 25) {
 							$arr = [];

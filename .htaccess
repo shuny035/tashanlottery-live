@@ -1,5 +1,11 @@
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
 RewriteEngine On
 RewriteBase /
+
+# Pass Authorization header to PHP
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 # Do not rewrite existing files or directories
 RewriteCond %{REQUEST_FILENAME} -f [OR]

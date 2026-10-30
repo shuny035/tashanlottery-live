@@ -1,10 +1,10 @@
 <?php 
 	// Database connection info 
 	$dbDetails = array( 
-		'host' => '127.0.0.1', 
-		'user' => 'root', 
-		'pass' => '', 
-		'db'   => 'tashan_db' 
+		'host' => 'sql302.infinityfree.com', 
+		'user' => 'if0_43313154', 
+		'pass' => 'J09oX3jfddQDeQ', 
+		'db'   => 'if0_43313154_tashan' 
 	); 
 	 
 	// DB table to use 

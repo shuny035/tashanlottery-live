@@ -41,31 +41,36 @@
 					$sesresult=$conn->query($sesquery);
 					$sesnum = mysqli_num_rows($sesresult);
 					if($sesnum == 1){
+						if(function getOrCreateActiveK3($conn, $table, $interval, $prefix) {
+							date_default_timezone_set("Asia/Kolkata");
+							$now = time();
+							$currentDate = date('Ymd');
+							$secOfDay = $now % 86400;
+							$seq = intval($secOfDay / $interval) + 1;
+							$currentPeriodId = $currentDate . $prefix . str_pad($seq, 4, '0', STR_PAD_LEFT);
+							$periodStartSec = $now - ($now % $interval);
+							$startTime = date('Y-m-d H:i:s', $periodStartSec);
+							$endTime = date('Y-m-d H:i:s', $periodStartSec + $interval);
+							$serviceTime = date('Y-m-d H:i:s', $now);
+							$q = $conn->query("SELECT atadaaidi FROM `$table` ORDER BY kramasankhye DESC LIMIT 1");
+							$row = $q ? mysqli_fetch_array($q) : null;
+							if (!$row || $row['atadaaidi'] != $currentPeriodId) {
+								$conn->query("INSERT INTO `$table` (`atadaaidi`, `dinankavannuracisi`) VALUES ('$currentPeriodId', '$startTime')");
+							}
+							return ['issueNumber'=>$currentPeriodId,'startTime'=>$startTime,'endTime'=>$endTime,'serviceTime'=>$serviceTime,'intervalM'=>($interval==30)?0.50:($interval/60)];
+						}
 						if($typeId == 9){
-							$oedajnahb = 'gelluonduhogu_kemuru';
+							$data = getOrCreateActiveK3($conn,'gelluonduhogu_kemuru',60,'30001');
 						}
 						else if($typeId == 10){
-							$oedajnahb = 'gelluonduhogu_kemuru_drei';
+							$data = getOrCreateActiveK3($conn,'gelluonduhogu_kemuru_drei',180,'30002');
 						}
 						else if($typeId == 11){
-							$oedajnahb = 'gelluonduhogu_kemuru_funf';
+							$data = getOrCreateActiveK3($conn,'gelluonduhogu_kemuru_funf',300,'30003');
 						}
 						else if($typeId == 12){
-							$oedajnahb = 'gelluonduhogu_kemuru_zehn';
+							$data = getOrCreateActiveK3($conn,'gelluonduhogu_kemuru_zehn',30,'30005');
 						}
-						$samasye = "SELECT atadaaidi, dinankavannuracisi
-						  FROM ".$oedajnahb."
-						  ORDER BY kramasankhye DESC LIMIT 1";
-						$samasyephalitansa=$conn->query($samasye);
-						$samasyesreni = mysqli_fetch_array($samasyephalitansa);
-						
-						$data['issueNumber'] = $samasyesreni['atadaaidi'];
-						$data['startTime'] = $samasyesreni['dinankavannuracisi'];
-						$ondusamaya = strtotime('+1 minute', strtotime($samasyesreni['dinankavannuracisi']));
-						$data['endTime'] = date('Y-m-d H:i:s', $ondusamaya);
-						$data['serviceTime'] = date('Y-m-d H:i:s');
-						$data['intervalM'] = 1;
-						
 						$res['data'] = $data;
 						$res['code'] = 0;
 						$res['msg'] = 'Succeed';

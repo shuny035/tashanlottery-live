@@ -58,9 +58,9 @@
 						  FROM ".$jayshriram."
 						  ORDER BY shonu DESC LIMIT 100";
 						$samasyephalitansa = $conn->query($samasye);
-						while($salu = mysqli_fetch_array($samasyephalitansa)){
-							$samasyephalitansa_sreni[] = $salu['phalitansa'];
-						}
+						$samasyephalitansa_sreni = [];
+						if ($samasyephalitansa) { while($salu = mysqli_fetch_array($samasyephalitansa)){ $samasyephalitansa_sreni[] = $salu['phalitansa']; } }
+						if (empty($samasyephalitansa_sreni)) { $samasyephalitansa_sreni = array_fill(0, 100, 0); }
 						
 						function createRandomArray($length = 10, $min = 5, $max = 25) {
 							$arr = [];

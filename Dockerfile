@@ -51,6 +51,12 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Enable required modules
 RUN a2enmod rewrite headers
 
+# Copy our custom Apache VirtualHost config BEFORE files
+COPY apache-tashan.conf /etc/apache2/sites-available/000-default.conf
+
+# Make sure AllowOverride All is set for the html dir
+RUN echo '<Directory /var/www/html>\n    AllowOverride All\n    Require all granted\n</Directory>' >> /etc/apache2/apache2.conf
+
 WORKDIR /var/www/html
 
 # Copy ALL directories
