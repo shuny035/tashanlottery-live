@@ -57,6 +57,7 @@
 						}
 						
 						$samatolana = ($pageNo - 1) * 10;
+						if (!isset($jayshriram) || empty($jayshriram)) { $jayshriram = 'bajikattuttate'; }
 						$shonuid = $data_auth['payload']['id'];
 						$samasye = "SELECT kalaparichaya, ojana, menge, wettanzahl, ketebida, phalaphala, sesabida, ergebnis, zufallig, tiarikala
 						  FROM ".$jayshriram." WHERE byabaharkarta = $shonuid
@@ -161,7 +162,7 @@
 							}
 						}
 						else{
-							$data['list'] = null;
+							$data['list'] = [];
 						}
 						
 						$samasye_ondu = "SELECT parichaya

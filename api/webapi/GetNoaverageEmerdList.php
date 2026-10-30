@@ -52,10 +52,14 @@
 						else if($typeId == 3){
 							$jayshriram = 'gellaluhogiondu_phalitansa_funf';
 						}
-						else if($typeId == 30){
+						else if($typeId == 4 || $typeId == 30){
 							$jayshriram = 'gellaluhogiondu_phalitansa_zehn';
 						}
+						else {
+							$jayshriram = 'gellaluhogiondu_phalitansa';
+						}
 						$samatolana = ($pageNo - 1) * 10;
+						if (!isset($jayshriram) || empty($jayshriram)) { $jayshriram = 'gellaluhogiondu_phalitansa'; }
 						$samasye = "SELECT kalaparichaya, phalitansa, banna, bele
 						  FROM ".$jayshriram."
 						  ORDER BY shonu DESC LIMIT $pageSize OFFSET $samatolana";
@@ -74,7 +78,7 @@
 							}
 						}
 						else{
-							$data['list'] = null;
+							$data['list'] = [];
 						}
 						
 						$samasye_ondu = "SELECT shonu

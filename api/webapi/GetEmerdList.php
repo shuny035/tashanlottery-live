@@ -50,8 +50,11 @@
 						else if($typeId == 3){
 							$jayshriram = 'gellaluhogiondu_phalitansa_funf';
 						}
-						else if($typeId == 4){
+						else if($typeId == 4 || $typeId == 30){
 							$jayshriram = 'gellaluhogiondu_phalitansa_zehn';
+						}
+						else {
+							$jayshriram = 'gellaluhogiondu_phalitansa';
 						}
 						
 						$samasye = "SELECT phalitansa
@@ -137,8 +140,8 @@
 						
 						function findFirstIndexes($arr) {
 							$firstIndexes = array_fill(0, 10, -1);
-							for ($i = 0; $i < 100; $i++) {
-								$digit = $arr[$i];
+							for ($i = 0; $i < count($arr); $i++) {
+								$digit = isset($arr[$i]) ? $arr[$i] : 0;
 								if ($firstIndexes[$digit] === -1) {
 									$firstIndexes[$digit] = $i; 
 								}
