@@ -6,20 +6,50 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install mysqli pdo_mysql \
     && a2enmod rewrite headers
 
-# Allow .htaccess overrides
-RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
-
-# Prevent Apache from exposing internal ports
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-    echo "UseCanonicalName Off" >> /etc/apache2/apache2.conf && \
-    echo "UseCanonicalPhysicalPort Off" >> /etc/apache2/apache2.conf
-
 ENV PORT=8080
 EXPOSE 8080
 
-# Use Render's dynamic port
-RUN sed -i 's/Listen .*/Listen ${PORT}/' /etc/apache2/ports.conf && \
-    sed -i 's/<VirtualHost \*:[0-9]*>/<VirtualHost *:${PORT}>/' /etc/apache2/sites-available/000-default.conf
+# Write a complete, clean Apache VirtualHost config with all rewrite rules baked in
+RUN cat > /etc/apache2/sites-available/000-default.conf << 'APACHECONF'
+<VirtualHost *:${PORT}>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    <Directory /var/www/html>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+
+        # Serve existing files/directories directly
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} -f [OR]
+        RewriteCond %{REQUEST_FILENAME} -d
+        RewriteRule ^ - [L]
+
+        # Never SPA-fallback for backend directories or PHP files
+        RewriteCond %{REQUEST_URI} ^/(api|admin|pay|pg|jili|assets|images|images_usdt|vendors|uploads|database|selfservice|tashangame|Tashanveu|jdb|jdbapi|jet|plugins|serive|manifest)(/|$) [NC]
+        RewriteRule ^ - [L]
+
+        RewriteCond %{REQUEST_URI} \.php$ [NC]
+        RewriteRule ^ - [L]
+
+        # SPA fallback for all frontend routes
+        RewriteRule ^.*$ /index.html [L]
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+APACHECONF
+
+# Set the port Apache listens on
+RUN echo "Listen \${PORT}" > /etc/apache2/ports.conf
+
+# Prevent Apache from exposing internal ports
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Enable required modules
+RUN a2enmod rewrite headers
 
 WORKDIR /var/www/html
 
@@ -50,7 +80,6 @@ COPY *.php .
 COPY *.svg .
 COPY *.png .
 COPY *.ico .
-COPY .htaccess .
 COPY php.ini .
 
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
