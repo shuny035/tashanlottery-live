@@ -1,7 +1,9 @@
 <?php 
 	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	header('Access-Control-Allow-Credentials: true');
-	header('Access-Control-Allow-Origin: https://tashan.indiawin.cfd');
+	// Allow any origin dynamically
+	$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '*';
+	header('Access-Control-Allow-Origin: ' . $origin);
 	header('Content-Type: application/json; charset=utf-8');
 	header('Strict-Transport-Security: max-age=31536000');
 	header('vary: Origin');

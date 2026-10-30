@@ -23,7 +23,7 @@ RUN sed -i 's/Listen .*/Listen ${PORT}/' /etc/apache2/ports.conf && \
 
 WORKDIR /var/www/html
 
-# Copy static assets first (ensures they exist for rewrites)
+# Copy ALL directories
 COPY assets ./assets
 COPY images ./images
 COPY images_usdt ./images_usdt
@@ -34,10 +34,24 @@ COPY pay ./pay
 COPY api ./api
 COPY admin ./admin
 COPY serive ./serive
+COPY database ./database
+COPY selfservice ./selfservice
+COPY tashangame ./tashangame
+COPY Tashanveu ./Tashanveu
+COPY jdb ./jdb
+COPY jdbapi ./jdbapi
+COPY jet ./jet
+COPY plugins ./plugins
+COPY manifest ./manifest
 
-# Copy SPA entry point and top‑level PHP files
+# Copy SPA entry point, all PHP files, and other root files
 COPY index.html .
 COPY *.php .
+COPY *.svg .
+COPY *.png .
+COPY *.ico .
+COPY .htaccess .
+COPY php.ini .
 
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 

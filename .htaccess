@@ -6,10 +6,13 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Hide .php extension (optional)
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php [L]
+# Block SPA fallback for API, admin, and all backend directories
+RewriteCond %{REQUEST_URI} ^/(api|admin|pay|pg|jili|assets|images|images_usdt|vendors|uploads|database|selfservice|tashangame|Tashanveu|jdb|jdbapi|jet|plugins|serive|manifest)/ [NC]
+RewriteRule ^ - [L]
 
-# Exclude known public folders from SPA fallback
-RewriteCond %{REQUEST_URI} !^/(api|admin|pay|pg|jili|assets|images|images_usdt|vendors|uploads|favicon|logo)/? [NC]
+# Block SPA fallback for PHP files
+RewriteCond %{REQUEST_URI} \.php$ [NC]
+RewriteRule ^ - [L]
+
+# SPA fallback ONLY for everything else
 RewriteRule ^.*$ /index.html [L]
