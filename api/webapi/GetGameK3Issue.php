@@ -41,7 +41,7 @@
 					$sesresult=$conn->query($sesquery);
 					$sesnum = mysqli_num_rows($sesresult);
 					if($sesnum == 1){
-						if(function getOrCreateActiveK3($conn, $table, $interval, $prefix) {
+						function getOrCreateActiveK3($conn, $table, $interval, $prefix) {
 							date_default_timezone_set("Asia/Kolkata");
 							$now = time();
 							$currentDate = date('Ymd');
