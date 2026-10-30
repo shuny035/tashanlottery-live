@@ -1,0 +1,21 @@
+import{r as c,F as $,I as W,V as j,a1 as F,a0 as H,aJ as q,P as i,aK as b,T as D,W as T,m as M,an as G,ao as O,aj as S,N as k,ad as L,ah as J,o as x,p as f,$ as C,ap as K,Z as Q,aL as N}from"./common.modules-adc6b33e.js";import{aQ as Z,aR as I,aS as X,aT as Y,c as ee,_ as ae}from"./page-activity-ActivityDetail-b9249b49.js";import"./native/index-0b5e3b14.js";import"./en-8e350547.js";window.getBuildInfo=function(){return{buildTime:"4/17/2025, 12:09:57 PM",branch:" commitId:8bf9f27a915f5dcd9b9436e446b585b05218b863"}};function te(p,o,w={immediate:!1}){const t=c(!1);let e=null;const u=()=>{const s=`
+      let intervalId = null;
+      self.onmessage = (e) => {
+        const { command, interval } = e.data;
+
+        switch (command) {
+          case 'start':
+            if (!intervalId) {
+              intervalId = setInterval(() => postMessage('tick'), interval);
+            }
+            break;
+          case 'pause':
+            clearInterval(intervalId);
+            intervalId = null;
+            break;
+        }
+      };
+    `,_=new Blob([s],{type:"application/javascript"});return new Worker(URL.createObjectURL(_))},r=()=>{e&&(t.value=!0,e.postMessage({command:"start",interval:o}))},d=()=>{e&&(t.value=!1,e.postMessage({command:"pause"}))},g=()=>{t.value||r()};return $(()=>{e=u(),e.onmessage=s=>{s.data==="tick"&&p()},w.immediate&&r()}),W(()=>{d(),e==null||e.terminate(),e=null}),{start:r,pause:d,resume:g,isActive:t}}const ne={class:"game-right"},se={class:"game-text"},oe=["src"],re=j({__name:"index",setup(p){const o=F(),w=c(null),t=c(!1),e=H(),{css:u,load:r,unload:d}=q(""),{getSelfCustomerServiceLink:g}=Z({ServerType:2}),s=c(0),_=i(()=>{if(!I)return{};if(!t)return{height:`${window.innerHeight}px`}}),B=i(()=>{const a=o.query.url;if(!a)return"";const n=X(a||"");return n.startsWith("https:")?n:`data:text/html;charset=utf-8,${encodeURIComponent(n)}`}),m=i(()=>{const a=o.query.vendorCode;return a||""}),A=i(()=>!I&&!["PG"].includes(m.value));i(()=>t.value?!1:!["ARLottery"].includes(m.value));function h(){I&&setTimeout(()=>{window.matchMedia("(orientation: landscape)").matches?(u.value=`
+            	    body #app { width: 100%; }
+            	`,t.value=!0,document.documentElement.classList.add("landscape")):(u.value="",t.value=!1,document.documentElement.classList.remove("landscape"))},10)}b(window,"resize",h),b(window,"orientationchange",h),b(window,"message",a=>{a.data==="game"&&e.go(-1)});const l=c(null),P=()=>{v()},v=()=>{document.documentElement.style.setProperty("--vh",`${window.innerHeight*.01}px`)},V=()=>{const a=e.resolve({name:"wallet"});window.open(a.href,"_blank")};async function R(){try{const a=await Y();a.code===0&&(s.value=a.data.balance)}catch{}}const{pause:z}=te(()=>{R()},1e3*12,{immediate:!0});return $(async()=>{h(),r(),v(),window.addEventListener("resize",v),setTimeout(()=>{R()},2e3)}),D(()=>{d(),z(),window.removeEventListener("resize",v),document.documentElement.classList.remove("landscape"),l.value&&(l.value.src="about:blank",l.value.remove(),l.value=null)}),(a,n)=>{const y=T("svg-icon"),U=T("NavBar");return A.value?L("v-if",!0):(x(),M("div",{key:0,class:"game-iframe",ref_key:"fullscreenElement",ref:w,style:J({height:_.value})},[["ARLottery"].includes(m.value)?L("v-if",!0):(x(),G(U,{key:0,class:S({"landscape-nav":t.value}),"left-arrow":"",onClickLeft:n[2]||(n[2]=E=>k(e).push({name:"home"}))},{right:O(()=>[f("div",ne,[f("span",se,[C(y,{name:"game_moneyb"}),K(" "+Q(k(ee)(s.value)),1)]),f("span",{class:"game-icon",onClick:n[0]||(n[0]=N(E=>V(),["stop"]))},[C(y,{name:"icon_addwallet"})]),f("span",{class:"game-icon",onClick:n[1]||(n[1]=N(E=>k(g)(),["stop"]))},[C(y,{name:"icon_customer3"})])])]),_:1},8,["class"])),B.value?(x(),M("iframe",{key:1,class:S({lotteryfull:["ARLottery"].includes(m.value),landscape:t.value}),sandbox:"allow-forms allow-orientation-lock allow-scripts allow-same-origin allow-top-navigation allow-popups",allowfullscreen:"true",ref_key:"iframeRef",ref:l,src:B.value,onLoad:P},null,42,oe)):L("v-if",!0)],4))}}});const de=ae(re,[["__scopeId","data-v-bc67dde2"],["__file","/usr/local/jenkins-prod/workspace/ar079-india-tashanwin/src/views/home/game/index.vue"]]);export{de as default};
+//# sourceMappingURL=page-home-game-9aaeaea5.js.map

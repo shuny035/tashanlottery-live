@@ -1,0 +1,2 @@
+import{m as i,o}from"./common.modules-adc6b33e.js";import{_ as r}from"./page-activity-ActivityDetail-b9249b49.js";import"./native/index-0b5e3b14.js";import"./en-8e350547.js";window.getBuildInfo=function(){return{buildTime:"4/17/2025, 12:09:57 PM",branch:" commitId:8bf9f27a915f5dcd9b9436e446b585b05218b863"}};const t={};function c(n,e){return o(),i("div")}const f=r(t,[["render",c],["__file","/usr/local/jenkins-prod/workspace/ar079-india-tashanwin/src/views/main/PointDetail/index.vue"]]);export{f as default};
+//# sourceMappingURL=page-main-PointDetail-f739dc3d.js.map
