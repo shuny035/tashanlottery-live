@@ -17,7 +17,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8080/main/manage_support.php">
+            <a class="nav-link" href="/main/manage_support.php">
               <i class="icon-box menu-icon"></i>
               <span class="menu-title">Self-Service Centre</span>
             </a>

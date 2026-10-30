@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y \
 # Allow .htaccess overrides in /var/www/html
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
+# Prevent Apache from appending internal port on redirects
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && echo "UseCanonicalName Off" >> /etc/apache2/apache2.conf \
+    && echo "UseCanonicalPhysicalPort Off" >> /etc/apache2/apache2.conf
+
 ENV PORT=8080
 EXPOSE 8080
 

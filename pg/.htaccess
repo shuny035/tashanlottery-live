@@ -1,19 +1,11 @@
-# Enable URL rewriting
 RewriteEngine On
+RewriteBase /pg/
 
-# Redirect to PHP files if no directory exists
-RewriteCond %{REQUEST_FILENAME} !-d
+# Allow existing files and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Check if php file exists without .php extension
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php [NC,L]
-
-# Set the server timezone
-SetEnv TZ Asia/Kolkata
-
-# Custom 404 error page
-ErrorDocument 404 /index.html
-
-# Force HTTPS redirection
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:X-Forwarded-SSL} !on
-RewriteCond %{HTTP_HOST} ^(www\.)?apkafurniture\.store$ [NC]
-RewriteRule ^/?$ "https://tashan.indiawin.cfd/" [R=301,L]
+RewriteRule ^(.*)$ $1.php [L]

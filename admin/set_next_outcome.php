@@ -1,7 +1,7 @@
 <?php
 // admin/set_next_outcome.php
 // Simple admin page to manually set the next winning number for the game.
-// Access: http://127.0.0.1:8080/admin/set_next_outcome.php (or corresponding port for other sites)
+// Access: /admin/set_next_outcome.php (or corresponding port for other sites)
 
 // Basic auth for quick protection (replace with your own mechanism)
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
