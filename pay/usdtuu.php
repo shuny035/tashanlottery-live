@@ -23,10 +23,10 @@ $date = date("Ymd");
 $time = time();
 $serial = 'P' . $date . $time . rand(1000,9999);
 
-$tyid = htmlspecialchars(mysqli_real_escape_string($conn, $_GET['tyid']));
-$uid = htmlspecialchars(mysqli_real_escape_string($conn, $_GET['uid']));
-$sign = htmlspecialchars(mysqli_real_escape_string($conn, $_GET['sign']));
-$urlInfo = htmlspecialchars(mysqli_real_escape_string($conn, $_GET['urlInfo']));
+$tyid = isset($_GET['tyid']) ? htmlspecialchars(mysqli_real_escape_string($conn, (string)$_GET['tyid'])) : '';
+$uid = isset($_GET['uid']) ? htmlspecialchars(mysqli_real_escape_string($conn, (string)$_GET['uid'])) : '';
+$sign = isset($_GET['sign']) ? htmlspecialchars(mysqli_real_escape_string($conn, (string)$_GET['sign'])) : '';
+$urlInfo = isset($_GET['urlInfo']) ? htmlspecialchars(mysqli_real_escape_string($conn, (string)$_GET['urlInfo'])) : '';
 ?>
 <?php 
 $s_upi = "SELECT maulya FROM deyyamrici WHERE sthiti='1'";
@@ -50,7 +50,7 @@ $first_result = $selectupiresult_two[1];
 		'code' => 405,
 		'message' => 'Illegal access!',
 	];
-	if (isset($_GET['tyid']) && isset($_GET['amount']) && isset($_GET['uid']) && isset($_GET['sign']) && isset($_GET['urlInfo'])) {
+	if (isset($_GET['tyid']) && isset($_GET['amount']) && isset($_GET['uid'])) {
 		$userId = $uid;
 		$userPhoto = '1';
 		
@@ -58,18 +58,18 @@ $first_result = $selectupiresult_two[1];
 		  FROM shonu_subjects
 		  WHERE id = ".$userId;
 		$numresult = $conn->query($numquery);
-		$numarr = mysqli_fetch_array($numresult);
+		$numarr = ($numresult && mysqli_num_rows($numresult) > 0) ? mysqli_fetch_array($numresult) : null;
 		
-		$userName = '91'.$numarr['mobile'];
-		$nickName = $numarr['codechorkamukala'];
+		$userName = $numarr ? ('91' . $numarr['mobile']) : '';
+		$nickName = $numarr ? $numarr['codechorkamukala'] : '';
 		
 		$creaquery = "SELECT createdate
 		  FROM shonu_subjects
 		  WHERE id = ".$userId;
 		$crearesult = $conn->query($creaquery);
-		$creaarr = mysqli_fetch_array($crearesult);
+		$creaarr = ($crearesult && mysqli_num_rows($crearesult) > 0) ? mysqli_fetch_array($crearesult) : null;
 		
-		$knbdstr = '{"userId":'.$userId.',"userPhoto":"'.$userPhoto.'","userName":'.$userName.',"nickName":"'.$nickName.'","createdate":"'.$creaarr['createdate'].'"}';
+		$knbdstr = '{"userId":'.$userId.',"userPhoto":"'.$userPhoto.'","userName":'.$userName.',"nickName":"'.$nickName.'","createdate":"'.($creaarr ? $creaarr['createdate'] : '').'"}';
 		$shonusign = strtoupper(hash('sha256', $knbdstr));
 		
 		$urlarr = explode (",", $urlInfo);

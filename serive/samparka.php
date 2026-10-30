@@ -1,22 +1,16 @@
 <?php
 date_default_timezone_set("Asia/Kolkata");
 
-$db_server = getenv('DB_HOST') ?: 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com';
-$db_user   = getenv('DB_USER') ?: '33DAiUvZbJwLN6P.root';
-$db_pass   = getenv('DB_PASSWORD') !== false && getenv('DB_PASSWORD') !== '' ? getenv('DB_PASSWORD') : '4YmiwUyUTs3a3Obe';
-$db_name   = getenv('DB_NAME') ?: 'tashan_db';
-$db_port   = (int)(getenv('DB_PORT') ?: 4000);
+$db_server = getenv('DB_HOST') ?: 'sql302.infinityfree.com';
+$db_user   = getenv('DB_USER') ?: 'if0_43313154';
+$db_pass   = getenv('DB_PASSWORD') !== false && getenv('DB_PASSWORD') !== '' ? getenv('DB_PASSWORD') : 'J09oX3jfddQDeQ';
+$db_name   = getenv('DB_NAME') ?: 'if0_43313154_tashan';
+$db_port   = (int)(getenv('DB_PORT') ?: 3306);
 
-$conn = mysqli_init();
-if ($db_server !== '127.0.0.1' && $db_server !== 'localhost') {
-    mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
-    mysqli_real_connect($conn, $db_server, $db_user, $db_pass, $db_name, $db_port, NULL, MYSQLI_CLIENT_SSL);
-} else {
-    mysqli_real_connect($conn, $db_server, $db_user, $db_pass, $db_name, $db_port);
-}
+$conn = @mysqli_connect($db_server, $db_user, $db_pass, $db_name, $db_port);
 
 if (!$conn || mysqli_connect_errno()) {
-    echo "Error: " . mysqli_connect_error();
-    exit();
+    die("Error: " . mysqli_connect_error());
 }
+mysqli_set_charset($conn, 'utf8mb4');
 ?>
